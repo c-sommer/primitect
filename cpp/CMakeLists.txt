@@ -1,0 +1,52 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.4)
+
+PROJECT(ppfplane)
+SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/" ${CMAKE_MODULE_PATH})
+
+# ROOTs
+SET(EIGEN_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/eigen")
+SET(CERES_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/build-ceres-solver/")
+SET(CGAL_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CGAL/")
+#SET(PANGOLIN_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/build-Pangolin/src")
+
+
+########## INCLUDED LIBRARIES ##########
+
+# Eigen
+SET(EIGEN_INCLUDE_DIR_HINTS ${EIGEN_ROOT})
+FIND_PACKAGE(Eigen3 3.3.4 REQUIRED)
+INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
+MESSAGE(STATUS "Found Eigen headers in: ${EIGEN3_INCLUDE_DIR}")
+
+# Ceres Solver
+FIND_PACKAGE(Ceres REQUIRED HINTS "${CERES_ROOT}")
+INCLUDE_DIRECTORIES(${CERES_INCLUDE_DIRS})
+MESSAGE(STATUS "Found Ceres headers in: ${CERES_INCLUDE_DIRS}")
+
+# CLI, command line parser
+INCLUDE_DIRECTORIES( thirdparty/CLI11/include/ )
+
+# ## CGAL
+# FIND_PACKAGE(CGAL 4.14 REQUIRED HINTS "${CGAL_ROOT}")
+# INCLUDE_DIRECTORIES(${CGAL_INCLUDE_DIRS})
+
+# tinyply
+INCLUDE_DIRECTORIES( thirdparty/tinyply/ )
+ADD_LIBRARY( tinyply ../thirdparty/tinyply/tinyply/tinyply.cpp )
+TARGET_COMPILE_OPTIONS( tinyply PRIVATE -std=c++11 )
+
+########## CUSTOM LIBRARIES ##########
+
+INCLUDE_DIRECTORIES( include/ )
+
+## point cloud data
+SET( LIB_NAME pcd_lib )
+ADD_LIBRARY( ${LIB_NAME} ../include/pcd/PointCloudData.cpp )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} tinyply )
+TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++11 )
+
+########## DIRECTORIES ##########
+
+ADD_SUBDIRECTORY(detect_objects)
+ADD_SUBDIRECTORY(track_object)
+# ADD_SUBDIRECTORY(cgal_test)

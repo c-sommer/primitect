@@ -1,0 +1,9 @@
+[submodule "cpp/thirdparty/eigen"]
+	path = cpp/thirdparty/eigen
+	url = https://github.com/eigenteam/eigen-git-mirror.git
+[submodule "cpp/thirdparty/CLI11"]
+	path = cpp/thirdparty/CLI11
+	url = https://github.com/CLIUtils/CLI11.git
+[submodule "cpp/thirdparty/ceres"]
+	path = cpp/thirdparty/ceres
+	url = https://github.com/NikolausDemmel/ceres-solver/
