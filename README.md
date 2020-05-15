@@ -100,9 +100,11 @@ Also note the different licenses of the submodules in the folder `thirdparty`.
 
 Please cite our paper when using the code in a scientific project. You can copy-paste the following BibTex entry:
 
+```
 @inproceedings{sommer2020,
     title   = {PrimiTect: Fast Continuous Hough Voting for Primitive Detection},
     author  = {Sommer, Christiane and Sun, Yumin and Bylow, Erik and Cremers, Daniel},
     booktitle = {IEEE International Conference on Robotics and Automation (ICRA)},
     year    = {2020}
 }
+```
