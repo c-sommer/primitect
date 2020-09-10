@@ -3,8 +3,8 @@
 This repository provides the code accompanying the paper
 *PrimiTect: Fast Continuous Hough Voting for Primitive Detection*
 by C. Sommer, Y. Sun, E. Bylow and D. Cremers,
-accepted for publication in the International Conference on Robotics and Automation (ICRA) 2020.
-A preprint can be found on arXiv, and we will provide the DOI once available.
+presented at the International Conference on Robotics and Automation (ICRA) 2020.
+A preprint can be found on [arXiv](https://arxiv.org/abs/2005.07457), and we will provide the DOI once available.
 
 ## Basic Usage
 
@@ -60,7 +60,7 @@ bin/DetectObjects --settings 39 --type all --in test_data.ply --folder ../../dat
 
 The executables of type `SphereDetectRefine` etc. run a subsequent refinement after primitive detection.
 Note that this is not part of our proposed method, but we include it to provide some way to get more accurate estimates.
-It uses C
+It uses Ceres with a robust loss function.
 
 #### Refinement of pre-detected primitives
 
