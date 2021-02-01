@@ -43,8 +43,8 @@ class Sphere : public MyObject<T> {
 
     union {
         struct {
-            Vec3 c_;
-            T r_;
+            Vec3 c_; // sphere center (3D coordinates)
+            T r_; // sphere radius (scalar)
         };
         T data_[4];
     };
@@ -110,7 +110,7 @@ public:
  */
 template <typename T>
 inline std::ostream& operator<<(std::ostream& os, const Sphere<T>& S) {
-
+    // display: sphere center (3D), sphere radius (1D)
     os << S.c_.transpose() << "\t" << S.r_;  
     return os;
     

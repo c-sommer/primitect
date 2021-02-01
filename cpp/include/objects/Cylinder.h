@@ -43,9 +43,9 @@ class Cylinder : public MyObject<T> {
 
     union {
         struct {
-            Vec3 c_;
-            Vec3 a_;
-            T r_;
+            Vec3 c_; // point on cylinder axis (3D coordinates, not uniquely defined)
+            Vec3 a_; // cylinder axis (3D vector with unit norm)
+            T r_; // cylinder radius (scalar)
         };
         T data_[7];
     };
@@ -128,7 +128,7 @@ public:
  */
 template <typename T>
 inline std::ostream& operator<<(std::ostream& os, const Cylinder<T>& C) {
-
+    // display: point on cylinder axis (3D), cylinder axis (3D), cylinder radius (1D)
     os << C.c_.transpose() << "\t" << C.a_.transpose() << "\t" << C.r_;  
     return os;
     

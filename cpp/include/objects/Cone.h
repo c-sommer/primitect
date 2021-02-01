@@ -43,11 +43,11 @@ class Cone : public MyObject<T> {
 
     union {
         struct {
-            Vec3 c_;
-            Vec3 a_;
+            Vec3 c_; // cone apex (3D coordinates)
+            Vec3 a_; // cone axis (3D vector with unit norm)
             T sin_theta_;
             T cos_theta_;
-            T theta_;
+            T theta_; // cone opening angle (scalar, in radians)
         };
         T data_[9];
     };
@@ -148,8 +148,8 @@ public:
  * ostream definition
  */
 template <typename T>
-inline std::ostream& operator<<(std::ostream& os, const Cone<T>& C) { // TODO
-
+inline std::ostream& operator<<(std::ostream& os, const Cone<T>& C) {
+    // display: cone apex (3D), cone axis (3D), cone opening angle (1D)
     os << C.c_.transpose() << "\t" << C.a_.transpose() << "\t" << C.theta_;
     return os;
     

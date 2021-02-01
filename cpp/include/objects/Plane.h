@@ -43,8 +43,8 @@ class Plane : public MyObject<T> {
 
     union {
         struct {
-            Vec3 n_;
-            T d_;
+            Vec3 n_; // plane normal (3D vector with unit norm)
+            T d_; // distance from plane to origin (scalar)
         };
         T data_[4];
     };
@@ -114,7 +114,7 @@ public:
  */
 template <typename T>
 inline std::ostream& operator<<(std::ostream& os, const Plane<T>& P) {
-
+    // display: plane normal (3D), plane distance to origin (1D)
     os << P.n_.transpose() << "\t" << P.d_;
     return os;
     

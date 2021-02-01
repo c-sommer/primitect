@@ -1,7 +1,7 @@
 # PrimiTect: Fast Continuous Hough Voting for Primitive Detection
 
 This repository provides the code accompanying the paper
-*PrimiTect: Fast Continuous Hough Voting for Primitive Detection*
+[*PrimiTect: Fast Continuous Hough Voting for Primitive Detection*](https://doi.org/10.1109/ICRA40945.2020.9196988)
 by C. Sommer, Y. Sun, E. Bylow and D. Cremers,
 presented at the International Conference on Robotics and Automation (ICRA) 2020.
 A preprint can be found on [arXiv](https://arxiv.org/abs/2005.07457), and we will provide the DOI once available.
@@ -55,6 +55,19 @@ To run it on a point cloud `test_data.ply` in folder `data`, `cd` into `cpp/dete
 ```
 bin/DetectObjects --settings 39 --type all --in test_data.ply --folder ../../data --results .
 ```
+The output are ASCII text files for each of the primitive type of the format
+```
+<#inliers>  <primitive parameters>
+```
+For example, if your input file is named `test_data.ply` and you chose a `--type` which includes spheres, in your specified result folder, you could find a file `test_data_spheres.txt`:
+```
+2500    3.500   4.214   1.209   0.592
+1000    1.987   -1.332  0.565   1.201
+```
+This would mean that two spheres were found by the algorithm -
+the first one centered at **(3.500, 4.214, 1.209)** and with radius 0.592 with 2500 inliers,
+and the second one centered at **(1.987, -1.332, 0.565)** with radius 1.201 and 1000 inliers.
+Please see the comments in `cpp/include/objects/` to see what the parameters of each primitive type mean.
 
 #### Detection and refinement
 
@@ -105,6 +118,7 @@ Please cite our paper when using the code in a scientific project. You can copy-
     title   = {PrimiTect: Fast Continuous Hough Voting for Primitive Detection},
     author  = {Sommer, Christiane and Sun, Yumin and Bylow, Erik and Cremers, Daniel},
     booktitle = {IEEE International Conference on Robotics and Automation (ICRA)},
-    year    = {2020}
+    year    = {2020},
+    doi = {10.1109/ICRA40945.2020.9196988}
 }
 ```
