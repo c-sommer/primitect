@@ -48,7 +48,7 @@ class Sphere : public MyObject<T> {
         };
         T data_[4];
     };
-    
+
 public:
 
     Sphere(Vec3 c, T r, Vec3 p = Vec3(0., 0., 0.)) : // TODO: replace default rep_
@@ -57,24 +57,29 @@ public:
         r_(r)
     {}
 
+    Sphere(const Sphere &other) : MyObject<T>(other.rep_),
+        c_(other.c_),
+        r_(other.r_)
+    {}
+
     T sdf(Vec3 p) const {
         const Vec3 d = p - c_;
         return r_ - d.norm();
     }
-    
+
     Vec3 normal(Vec3 p) const {
         return (p - c_).normalized();
     }
-    
+
     Vec3 project(Vec3 p) const {
         const Vec3 d = p - c_;
         return p + (r_ / d.norm() - 1.) * d;
     }
-    
+
     virtual Vec3 normal_rep() const {
         return (this->rep_ - c_) / r_;
     }
-    
+
     T integrate(T w_this, Sphere* other, T w_other) {
         T w_new = w_this + w_other;
         T w_new_inv = 1. / w_new;
@@ -83,11 +88,11 @@ public:
         this->rep_ = project(this->rep_);
         return w_new;
     }
-    
+
     T dist(Sphere<T>* other) {
         return (c_ - other->c_).norm();
     }
-    
+
     T r_dist(Sphere<T>* other) {
         return r_ - other->r_;
     }
@@ -95,12 +100,12 @@ public:
     T* data() {
         return data_;
     }
-    
+
     template <typename U>
     Sphere<U> cast() {
-        return Sphere<U>(c_.cast<U>(), U(r_), this->rep_.cast<U>());
+        return Sphere<U>(c_.template cast<U>(), U(r_), this->rep_.template cast<U>());
     }
-    
+
     friend std::ostream& operator<< <>(std::ostream& os, const Sphere<T>& S);
 
 };
@@ -111,9 +116,9 @@ public:
 template <typename T>
 inline std::ostream& operator<<(std::ostream& os, const Sphere<T>& S) {
     // display: sphere center (3D), sphere radius (1D)
-    os << S.c_.transpose() << "\t" << S.r_;  
+    os << S.c_.transpose() << "\t" << S.r_;
     return os;
-    
+
 }
 
 #endif // SPHERE_H_

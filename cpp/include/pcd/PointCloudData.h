@@ -26,6 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef POINT_CLOUD_DATA_H_
 #define POINT_CLOUD_DATA_H_
 
+#include <vector>
 #include <iostream>
 #include <Eigen/Dense>
 
@@ -43,7 +44,7 @@ public:
         num_points_(points.size())
     {
     }
-    
+
     PointCloudData(std::string filepath);
 
     float point(size_t idx, size_t dim) const {
@@ -53,25 +54,25 @@ public:
     float normal(size_t idx, size_t dim) const {
         return normals_[idx][dim];
     }
-    
+
     Eigen::Vector3f point(size_t idx) const {
         return points_[idx];
     }
-    
+
     Eigen::Vector3f normal(size_t idx) const {
         return normals_[idx];
     }
-    
+
     size_t num_points() const {
         return num_points_;
     }
-    
+
     void normalize() {
         for (auto& n : normals_) {
             n.normalize();
         }
     }
-    
+
     void sample(std::vector<size_t> indices) {
         std::vector<Eigen::Vector3f> new_points, new_normals;
         for (const auto& idx : indices) {
@@ -82,13 +83,13 @@ public:
         normals_ = new_normals;
         num_points_ = points_.size();
     }
-    
+
     void scale(float scale) {
         for (auto& p : points_) {
             p *= scale;
         }
     }
-    
+
     float diameter() const {
         float min_x = std::numeric_limits<float>::max(),    min_y = min_x, min_z = min_y;
         float max_x = std::numeric_limits<float>::lowest(), max_y = max_x, max_z = max_y;
@@ -105,7 +106,7 @@ public:
         const float dz = max_z - min_z;
         return std::sqrt(dx * dx + dy * dy + dz * dz);
     }
-    
+
     void write(std::string filepath);
 
 };
