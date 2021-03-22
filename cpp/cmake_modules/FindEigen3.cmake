@@ -61,6 +61,7 @@ if (EIGEN3_INCLUDE_DIR)
 
 else (EIGEN3_INCLUDE_DIR)
 
+  message(STATUS "SEARCHING FOR EIGEN... $ENV{Eigen3_DIR}")
   find_path(EIGEN3_INCLUDE_DIR NAMES signature_of_eigen3_matrix_library
       HINTS ${EIGEN_INCLUDE_DIR_HINTS}
       PATHS
@@ -68,6 +69,7 @@ else (EIGEN3_INCLUDE_DIR)
       /opt/local/include
       ${CMAKE_INSTALL_PREFIX}/include
       ${KDE4_INCLUDE_DIR}
+      $ENV{Eigen3_DIR}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty
       PATH_SUFFIXES eigen3 eigen
     )
@@ -82,4 +84,3 @@ else (EIGEN3_INCLUDE_DIR)
   mark_as_advanced(EIGEN3_INCLUDE_DIR)
 
 endif(EIGEN3_INCLUDE_DIR)
-

@@ -32,7 +32,7 @@ INCLUDE_DIRECTORIES( thirdparty/CLI11/include/ )
 
 # tinyply
 INCLUDE_DIRECTORIES( thirdparty/tinyply/ )
-ADD_LIBRARY( tinyply ../thirdparty/tinyply/tinyply/tinyply.cpp )
+ADD_LIBRARY( tinyply ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/tinyply/tinyply/tinyply.cpp )
 TARGET_COMPILE_OPTIONS( tinyply PRIVATE -std=c++11 )
 
 ########## CUSTOM LIBRARIES ##########
@@ -41,7 +41,7 @@ INCLUDE_DIRECTORIES( include/ )
 
 ## point cloud data
 SET( LIB_NAME pcd_lib )
-ADD_LIBRARY( ${LIB_NAME} ../include/pcd/PointCloudData.cpp )
+ADD_LIBRARY( ${LIB_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/include/pcd/PointCloudData.cpp )
 TARGET_LINK_LIBRARIES( ${LIB_NAME} tinyply )
 TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++11 )
 
