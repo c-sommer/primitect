@@ -14,7 +14,22 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
+TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
+
+## ----- test object detector library with different DetectorSettings -----
+
+SET(APP_NAME Primitect)
+
+ADD_LIBRARY( ${APP_NAME} SHARED
+        main_voting_sample_lib.cpp
+        )
+
+TARGET_LINK_LIBRARIES( ${APP_NAME}
+        tinyply
+        pcd_lib
+        )
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- detect and refine planes with "optimal" settings -----
@@ -30,7 +45,7 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- detect and refine spheres with "optimal" settings -----
@@ -46,7 +61,7 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- detect and refine cylinders with "optimal" settings -----
@@ -62,7 +77,7 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- detect and refine cones with "optimal" settings -----
@@ -78,7 +93,7 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- refine plane parameters -----
@@ -94,7 +109,7 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- refine sphere parameters -----
@@ -110,7 +125,7 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )
 
 ## ----- refine cylinder parameters -----
@@ -126,5 +141,5 @@ TARGET_LINK_LIBRARIES( ${APP_NAME}
         tinyply
         pcd_lib
         )
-        
+
 TARGET_COMPILE_OPTIONS( ${APP_NAME} PRIVATE -std=c++11 )

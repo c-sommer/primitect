@@ -48,11 +48,11 @@ class Plane : public MyObject<T> {
         };
         T data_[4];
     };
-    
+
     static int sgn(T x) {
         return (0. < x) - (x < 0.);
     }
-    
+
 public:
 
     Plane(Vec3 n, T d, Vec3 p = Vec3(0., 0., 0.)) : // TODO: replace default rep_
@@ -61,22 +61,28 @@ public:
         d_(d)
     {}
 
+    Plane(const Plane& other) : // TODO: replace default rep_
+        MyObject<T>(other.rep_),
+        n_(other.n_),
+        d_(other.d_)
+    {}
+
     T sdf(Vec3 p) const {
         return n_.dot(p) + d_;
     }
-    
+
     Vec3 normal(Vec3 p) const {
         return -n_;
     }
-    
+
     Vec3 project(Vec3 p) const {
         return p - sdf(p) * n_;
     }
-    
+
     virtual Vec3 normal_rep() const {
         return -n_;
     }
-    
+
     T integrate(T w_this, Plane* other, T w_other) {
         // TODO: make a better plane averaging by points
         T w_new = w_this + w_other;
@@ -87,11 +93,11 @@ public:
         this->rep_ = project(this->rep_);
         return w_new;
     }
-    
+
     T dist(Plane<T>* other) {
         return std::abs(d_ - other->d_);
     }
-    
+
     T angle(Plane<T>* other) {
         return n_.dot(other->n_);
     }
@@ -99,12 +105,12 @@ public:
     T* data() {
         return data_;
     }
-    
+
     template <typename U>
     Plane<U> cast() {
-        return Plane<U>(n_.cast<U>(), U(d_), this->rep_.cast<U>());
+        return Plane<U>(n_.template cast<U>(), U(d_), this->rep_.template cast<U>());
     }
-    
+
     friend std::ostream& operator<< <>(std::ostream& os, const Plane<T>& P);
 
 };
@@ -117,7 +123,7 @@ inline std::ostream& operator<<(std::ostream& os, const Plane<T>& P) {
     // display: plane normal (3D), plane distance to origin (1D)
     os << P.n_.transpose() << "\t" << P.d_;
     return os;
-    
+
 }
 
 #endif // PLANE_H_

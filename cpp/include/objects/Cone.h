@@ -51,19 +51,19 @@ class Cone : public MyObject<T> {
         };
         T data_[9];
     };
-    
+
     T angle_point_axis(Vec3 a) {
         T sin_theta = a.dot(a_ - cos_theta_ * (this->rep_ - c_).normalized());
         return std::asin(sin_theta);
     }
-    
+
     T shift_axis(Vec3 a, Vec3 c) {
         Vec3 d = this->rep_ - c;
         T h = d.dot(a);
         T r = std::sqrt(d.squaredNorm() - h * h);
         return r * cos_theta_ / sin_theta_ - h;
     }
-    
+
 public:
 
     Cone(Vec3 c, Vec3 a, T sin_theta, Vec3 p = Vec3(0., 0., 0.)) : // TODO: replace default rep_
@@ -75,6 +75,14 @@ public:
         theta_(std::asin(sin_theta_))
     {}
 
+    Cone(const Cone &other) : MyObject<T>(other.rep_),
+      c_(other.c_),
+      a_(other.a_),
+      sin_theta_(other.sin_theta_),
+      cos_theta_(other.cos_theta_),
+      theta_(other.theta_)
+    {}
+
     T sdf(Vec3 p) const {
         const Vec3 d = (p - c_);
         const T h = d.dot(a_);
@@ -83,7 +91,7 @@ public:
             return -d.norm();
         return h * sin_theta_ - r * cos_theta_;
     }
-    
+
     Vec3 normal(Vec3 p) const {
         const Vec3 d = (p - c_);
         const T h = d.dot(a_);
@@ -92,7 +100,7 @@ public:
             return d.normalized();
         return -sin_theta_ * a_ + cos_theta_ * (d - h * a_).normalized();
     }
-    
+
     Vec3 project(Vec3 p) const { // TODO : possibly improve
         const Vec3 d = (p - c_);
         const T h = d.dot(a_);
@@ -101,12 +109,12 @@ public:
             return c_;
         return p + sdf(p) * normal(p);
     }
-    
+
     virtual Vec3 normal_rep() const {
         const Vec3 d = (this->rep_ - c_);
         return (-a_ + cos_theta_ * d.normalized()) / sin_theta_;
     }
-    
+
     T integrate(T w_this, Cone* other, T w_other) {
         T w_new = w_this + w_other;
         T w_new_inv = 1. / w_new;
@@ -118,15 +126,15 @@ public:
         this->rep_ = project(this->rep_);
         return w_new;
     }
-    
+
     T dist(Cone<T>* other) {
         return (c_ - other->c_).norm();
     }
-    
+
     T angle(Cone<T>* other) {
         return a_.dot(other->a_);
     }
-    
+
     T angle_dist(Cone<T>* other) {
         return theta_ - other->theta_;
     }
@@ -134,12 +142,12 @@ public:
     T* data() {
         return data_;
     }
-    
+
     template <typename U>
     Cone<U> cast() {
-        return Cone<U>(c_.cast<U>(), a_.cast<U>(), U(sin_theta_), this->rep_.cast<U>());
+        return Cone<U>(c_.template cast<U>(), a_.template cast<U>(), U(sin_theta_), this->rep_.template cast<U>());
     }
-    
+
     friend std::ostream& operator<< <>(std::ostream& os, const Cone<T>& C);
 
 };
@@ -152,7 +160,7 @@ inline std::ostream& operator<<(std::ostream& os, const Cone<T>& C) {
     // display: cone apex (3D), cone axis (3D), cone opening angle (1D)
     os << C.c_.transpose() << "\t" << C.a_.transpose() << "\t" << C.theta_;
     return os;
-    
+
 }
 
 #endif // CONE_H_
